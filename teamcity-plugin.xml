@@ -4,9 +4,9 @@
     <name>teamcity-vsix-gallery</name>
     <display-name>teamcity-vsix-gallery</display-name>
     <version>@Version@</version>
-    <description>Plugin description</description>
-    <download-url>Plugin download URL</download-url>
-    <email>Plugin author e-mail</email>
+    <description>A plugin for JetBrains TeamCity that turns it into a Visual Studio Extensions (vsix) Gallery</description>
+    <download-url>https://github.com/hmemcpy/teamcity-vsix-gallery</download-url>
+    <email>hmemcpy@gmail.com</email>
     <vendor>
       <name>@VendorName@</name>
       <url>@VendorURL@</url>

@@ -11,8 +11,9 @@
   <properties>
       <maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
       <teamcity.teamcity-vsix-gallery.plugin.version>snapshot-${maven.build.timestamp}</teamcity.teamcity-vsix-gallery.plugin.version>
-      <teamcity.teamcity-vsix-gallery.plugin.vendorName>Plugin vendor name</teamcity.teamcity-vsix-gallery.plugin.vendorName>
-      <teamcity.teamcity-vsix-gallery.plugin.vendorUrl>Plugin vendor URL</teamcity.teamcity-vsix-gallery.plugin.vendorUrl>
+      <teamcity.teamcity-vsix-gallery.plugin.vendorName>Igal Tabachnik</teamcity.teamcity-vsix-gallery.plugin.vendorName>
+      <teamcity.teamcity-vsix-gallery.plugin.vendorUrl>http://hmemcpy.com</teamcity.teamcity-vsix-gallery.plugin.vendorUrl>
+      <teamcity.data.path>${env.TEAMCITY_DATA_PATH}</teamcity.data.path>
   </properties>
   <dependencies>
       <dependency>
@@ -73,6 +74,31 @@
                   </descriptors>
                 </configuration>
               </execution>
+            </executions>
+        </plugin>
+        <plugin>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <version>1.7</version>
+            <executions>
+                <execution>
+                    <id>deploy-teamcity-plugin</id>
+                    <phase>package</phase>
+                    <goals>
+                        <goal>run</goal>
+                    </goals>
+                    <configuration>
+                        <target>
+                            <!-- hack: for some reason, project.parent.build.directory is not defined here -->
+                            <copy file="${project.build.directory}\..\..\target\teamcity-vsix-gallery.zip" todir="${teamcity.data.path}\plugins" />
+                            <exec executable="cmd">
+                                <arg line="/c net stop teamcity" />
+                            </exec>
+                            <exec executable="cmd">
+                                <arg line="/c net start teamcity" />
+                            </exec>
+                        </target>
+                    </configuration>
+                </execution>
             </executions>
         </plugin>
     </plugins>
