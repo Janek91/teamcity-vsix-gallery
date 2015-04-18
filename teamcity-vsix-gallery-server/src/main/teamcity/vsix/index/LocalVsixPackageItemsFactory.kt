@@ -1,4 +1,4 @@
-package index
+package teamcity.vsix.index
 
 import jetbrains.buildServer.serverSide.SBuild
 import java.util.Date

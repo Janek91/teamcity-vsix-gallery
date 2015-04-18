@@ -1,4 +1,4 @@
-package index
+package teamcity.vsix.index
 
 import com.google.common.collect.Lists
 import com.intellij.openapi.diagnostic.Logger
@@ -15,9 +15,10 @@ import java.util.*
 
 class VsixMetadataProvider() : BuildMetadataProvider {
     val VSIX_EXTENSION: String = ".vsix"
-    val LOG = Loggers.SERVER;
+    val LOG = Logger.getInstance("teamcity.vsix");
+
     {
-        LOG.info("VsixGallery: Metadata provider initialized")
+        LOG.info("Metadata provider initialized.")
     }
 
     override fun getProviderId(): String = VSIX_EXTENSION.substring(1)

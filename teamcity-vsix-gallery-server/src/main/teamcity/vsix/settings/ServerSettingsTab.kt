@@ -1,7 +1,9 @@
-package settings.tab
+package teamcity.vsix.settings
 
-import jetbrains.buildServer.web.openapi.*;
-import java.util.Arrays
+import jetbrains.buildServer.web.openapi.PagePlaces
+import jetbrains.buildServer.web.openapi.PlaceId
+import jetbrains.buildServer.web.openapi.PluginDescriptor
+import jetbrains.buildServer.web.openapi.SimpleCustomTab
 
 class ServerSettingsTab(pagePlaces: PagePlaces, descriptor: PluginDescriptor) :
         SimpleCustomTab(pagePlaces,
@@ -13,4 +15,3 @@ class ServerSettingsTab(pagePlaces: PagePlaces, descriptor: PluginDescriptor) :
         register()
     }
 }
-
