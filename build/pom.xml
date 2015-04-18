@@ -89,6 +89,7 @@
                     <configuration>
                         <target>
                             <!-- hack: for some reason, project.parent.build.directory is not defined here -->
+                            <!-- see http://stackoverflow.com/questions/4040778/parent-properties-inside-maven-antrun-plugin -->
                             <copy file="${project.build.directory}\..\..\target\teamcity-vsix-gallery.zip" todir="${teamcity.data.path}\plugins" />
                             <exec executable="cmd">
                                 <arg line="/c net stop teamcity" />
