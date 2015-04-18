@@ -14,6 +14,7 @@ import jetbrains.buildServer.util.StringUtil
 import java.util.*
 
 class VsixMetadataProvider() : BuildMetadataProvider {
+    val VSIX_PROVIDER_ID: String = "vsix"
     val VSIX_EXTENSION: String = ".vsix"
     val LOG = Logger.getInstance("teamcity.vsix");
 
@@ -21,10 +22,10 @@ class VsixMetadataProvider() : BuildMetadataProvider {
         LOG.info("Metadata provider initialized.")
     }
 
-    override fun getProviderId(): String = VSIX_EXTENSION.substring(1)
+    override fun getProviderId(): String = VSIX_PROVIDER_ID
 
     override fun generateMedatadata(build: SBuild, store: MetadataStorageWriter) {
-        LOG.debug("Looking for VSIX packages in " + LogUtil.describe(build))
+        LOG.info("Looking for VSIX packages in " + LogUtil.describe(build))
 
         val packages = ArrayList<BuildArtifact>()
         visitArtifacts(build.getArtifacts(BuildArtifactsViewMode.VIEW_ALL).getRootArtifact(), packages)
@@ -48,7 +49,6 @@ class VsixMetadataProvider() : BuildMetadataProvider {
             val name = artifact.getName().toLowerCase()
             if (name.endsWith(VSIX_EXTENSION))
                 packages.add(artifact)
-            return
         }
 
         for (children in artifact.getChildren()) {
