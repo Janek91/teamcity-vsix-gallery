@@ -15,7 +15,6 @@ import java.util.*
 
 class VsixMetadataProvider() : BuildMetadataProvider {
     val VSIX_PROVIDER_ID: String = "vsix"
-    val VSIX_EXTENSION: String = ".vsix"
     val LOG = Logger.getInstance("teamcity.vsix");
 
     {
@@ -39,27 +38,34 @@ class VsixMetadataProvider() : BuildMetadataProvider {
             } catch (e: PackageLoadException) {
                 LOG.warn("Failed to read VSIX package: " + aPackage)
             }
-
         }
+    }
+
+    val TEAMCITY_ARTIFACT_RELPATH: String = "teamcity.artifactPath"
+    val TEAMCITY_BUILD_TYPE_ID: String = "teamcity.buildTypeId"
+
+    public fun generateMetadataForPackage(build: SBuild, aPackage: BuildArtifact): Map<String, String> {
+        val analyzer = VsixPackageStructureAnalyser(build.getFinishDate())
+        val visitor = VsixPackageStructureVisitor(Arrays.asList(analyzer))
+        visitor.visit(aPackage)
+
+        val metadata = analyzer.getItems()
+        metadata.put(TEAMCITY_ARTIFACT_RELPATH, aPackage.getRelativePath())
+        metadata.put(TEAMCITY_BUILD_TYPE_ID, build.getBuildTypeId())
+        LOG.info("Metadata: " + metadata)
+        return metadata
     }
 
     // todo make this a lambda expression (Kotlin surely supports those!)
     fun visitArtifacts(artifact: BuildArtifact, packages: MutableList<BuildArtifact>) {
         if (!artifact.isDirectory()) {
             val name = artifact.getName().toLowerCase()
-            if (name.endsWith(VSIX_EXTENSION))
+            if (name.endsWith(".vsix"))
                 packages.add(artifact)
         }
 
         for (children in artifact.getChildren()) {
             visitArtifacts(children, packages)
         }
-    }
-
-    //throws(javaClass<PackageLoadException>())
-    public fun generateMetadataForPackage(build: SBuild, aPackage: BuildArtifact): Map<String, String> {
-        val metadata = LinkedHashMap<String, String>()
-        metadata.put("Id", aPackage.getName())
-        return metadata
     }
 }

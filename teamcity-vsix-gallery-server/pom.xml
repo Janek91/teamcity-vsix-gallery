@@ -77,5 +77,11 @@
       <scope>test</scope>
     </dependency>
 
+    <dependency>
+      <groupId>com.mycila</groupId>
+      <artifactId>mycila-xmltool</artifactId>
+      <version>4.4.ga</version>
+    </dependency>
+
   </dependencies>
 </project>

@@ -7,7 +7,7 @@ import org.springframework.web.servlet.ModelAndView
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
-class FeedServerController(web : WebControllerManager) : BaseController() {
+class FeedServerController(val web : WebControllerManager, val feedHandler : AtomFeedCreator) : BaseController() {
     val LOG = Logger.getInstance("teamcity.vsix");
 
     {
@@ -17,7 +17,7 @@ class FeedServerController(web : WebControllerManager) : BaseController() {
 
     override fun doHandle(request: HttpServletRequest, response: HttpServletResponse): ModelAndView? {
 
-        LOG.info("handling request!")
+        feedHandler.handleRequest(request, response)
         return null
     }
 }

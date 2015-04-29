@@ -5,7 +5,7 @@
     <bean class="teamcity.vsix.index.PackagesIndex" />
 
     <bean class="teamcity.vsix.feed.FeedServerController" />
-    <bean class="teamcity.vsix.feed.FeedHandler" />
+    <bean class="teamcity.vsix.feed.AtomFeedCreator" />
 
     <bean class="teamcity.vsix.settings.ServerSettingsTab"/>
 </beans>
