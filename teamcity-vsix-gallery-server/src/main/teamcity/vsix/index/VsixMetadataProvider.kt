@@ -11,6 +11,8 @@ import jetbrains.buildServer.serverSide.impl.LogUtil
 import jetbrains.buildServer.serverSide.metadata.BuildMetadataProvider
 import jetbrains.buildServer.serverSide.metadata.MetadataStorageWriter
 import jetbrains.buildServer.util.StringUtil
+import org.joda.time.DateTime
+import org.joda.time.DateTimeZone
 import java.util.*
 
 class VsixMetadataProvider() : BuildMetadataProvider {
@@ -45,7 +47,7 @@ class VsixMetadataProvider() : BuildMetadataProvider {
     val TEAMCITY_BUILD_TYPE_ID: String = "teamcity.buildTypeId"
 
     public fun generateMetadataForPackage(build: SBuild, aPackage: BuildArtifact): Map<String, String> {
-        val analyzer = VsixPackageStructureAnalyser(build.getFinishDate())
+        val analyzer = VsixPackageStructureAnalyser(DateTime(build.getFinishDate(), DateTimeZone.UTC))
         val visitor = VsixPackageStructureVisitor(Arrays.asList(analyzer))
         visitor.visit(aPackage)
 

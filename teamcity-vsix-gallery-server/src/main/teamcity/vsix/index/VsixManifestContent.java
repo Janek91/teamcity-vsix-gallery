@@ -1,5 +1,6 @@
 package teamcity.vsix.index;
 
+import com.intellij.openapi.diagnostic.Logger;
 import org.jdom.Element;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -19,6 +20,8 @@ public class VsixManifestContent {
     private static final String PUBLISHER = "Publisher";
     private static final String DISPLAY_NAME = "DisplayName";
     private static final String DESCRIPTION = "Description";
+
+    private static Logger LOG = Logger.getInstance("teamcity.vsix");
 
     private Element myContent;
 
@@ -63,13 +66,20 @@ public class VsixManifestContent {
 
     @Nullable
     private String parseAttribute(@NotNull final Element root, @NotNull final String childName, @NotNull final String attribute) {
+        LOG.info("parseAttribute: element: " + root + " childName: " + childName + " attribute: " + attribute);
         final Element metadata = getChild(root, childName);
-        if (metadata == null) return null;
-        return metadata.getAttributeValue(attribute);
+        if (metadata == null){
+            LOG.info("parseAttribute: child not found :(");
+            return null;
+        }
+        String result = metadata.getAttributeValue(attribute);
+        LOG.info("getAttributeValue result: " + result);
+        return result;
     }
 
     @Nullable
     private static String parseProperty(@NotNull final Element root, @NotNull final String childName, final @NotNull String name) {
+        LOG.info("parseProperty: element: " + root + " childName: " + childName + " property: " + name);
         final Element child = getChild(getChild(root, childName), name);
         return child == null ? null : child.getTextNormalize();
     }

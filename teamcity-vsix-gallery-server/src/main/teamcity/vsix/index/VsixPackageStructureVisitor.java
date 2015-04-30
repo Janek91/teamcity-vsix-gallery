@@ -39,9 +39,6 @@ public class VsixPackageStructureVisitor {
             while ((zipEntry = zipInputStream.getNextEntry()) != null) {
                 if(zipEntry.isDirectory()) continue;
                 final String zipEntryName = zipEntry.getName();
-                for(VsixPackageStructureAnalyser analyser : myAnalysers){
-                    analyser.analyseEntry(zipEntryName);
-                }
                 if (zipEntryName.endsWith(FeedConstants.VSIXMANIFEST_FILE_EXTENSION)) {
                     LOG.info(String.format("Manifest file found on path %s in VSIX package %s", zipEntryName, vsixPackageName));
                     final VsixManifestContent vsixManifestContent = readVsixManifestContent(zipInputStream);
