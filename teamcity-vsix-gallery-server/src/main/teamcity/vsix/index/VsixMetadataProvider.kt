@@ -15,8 +15,9 @@ import org.joda.time.DateTime
 import org.joda.time.DateTimeZone
 import java.util.*
 
+import teamcity.vsix.feed.FeedConstants.*
+
 class VsixMetadataProvider() : BuildMetadataProvider {
-    val VSIX_PROVIDER_ID: String = "vsix"
     val LOG = Logger.getInstance("teamcity.vsix");
 
     {
@@ -54,7 +55,7 @@ class VsixMetadataProvider() : BuildMetadataProvider {
         val metadata = analyzer.getItems()
         metadata.put(TEAMCITY_ARTIFACT_RELPATH, aPackage.getRelativePath())
         metadata.put(TEAMCITY_BUILD_TYPE_ID, build.getBuildTypeId())
-        LOG.info("Metadata: " + metadata)
+        LOG.debug("Metadata: " + metadata)
         return metadata
     }
 
@@ -62,7 +63,7 @@ class VsixMetadataProvider() : BuildMetadataProvider {
     fun visitArtifacts(artifact: BuildArtifact, packages: MutableList<BuildArtifact>) {
         if (!artifact.isDirectory()) {
             val name = artifact.getName().toLowerCase()
-            if (name.endsWith(".vsix"))
+            if (name.endsWith(VSIX_EXTENSION))
                 packages.add(artifact)
         }
 

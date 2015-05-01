@@ -4,8 +4,10 @@
     <bean class="teamcity.vsix.index.VsixMetadataProvider"/>
     <bean class="teamcity.vsix.index.PackagesIndex" />
 
-    <bean class="teamcity.vsix.feed.FeedServerController" />
+    <bean class="teamcity.vsix.feed.VsixFeedController" />
     <bean class="teamcity.vsix.feed.AtomFeedCreator" />
 
     <bean class="teamcity.vsix.settings.ServerSettingsTab"/>
+    <bean class="teamcity.vsix.settings.VsixServerSettings"/>
+    <bean class="teamcity.vsix.settings.FeedSettingsController"/>
 </beans>

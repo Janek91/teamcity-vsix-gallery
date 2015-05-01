@@ -12,6 +12,7 @@ import java.util.ArrayList
 import com.mycila.xmltool.XMLDoc
 import jetbrains.buildServer.serverSide.ProjectManager
 import jetbrains.buildServer.util.Util
+import jetbrains.buildServer.web.util.WebUtil
 
 class AtomFeedCreator(val index: PackagesIndex, val projects: ProjectManager) {
     val LOG = Logger.getInstance("teamcity.vsix");
@@ -61,6 +62,6 @@ class AtomFeedCreator(val index: PackagesIndex, val projects: ProjectManager) {
 
     private fun getArtifactPath(vsix: VsixPackage): String {
         val externalBuildId = projects.findBuildTypeById(vsix.BuildTypeId).getExternalId()
-        return "/guestAuth/repository/download/" + externalBuildId + "/" + vsix.BuildId + ":id/" + vsix.ContentPath
+        return WebUtil.GUEST_AUTH_PREFIX + "repository/download/" + externalBuildId + "/" + vsix.BuildId + ":id/" + vsix.ContentPath
     }
 }

@@ -2,17 +2,19 @@ package teamcity.vsix.feed
 
 import com.intellij.openapi.diagnostic.Logger
 import jetbrains.buildServer.controllers.BaseController
+import jetbrains.buildServer.web.openapi.PluginDescriptor
 import jetbrains.buildServer.web.openapi.WebControllerManager
 import org.springframework.web.servlet.ModelAndView
+import teamcity.vsix.settings.VsixServerSettings
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
-class FeedServerController(val web : WebControllerManager, val feedHandler : AtomFeedCreator) : BaseController() {
-    val LOG = Logger.getInstance("teamcity.vsix");
+class VsixFeedController(val web : WebControllerManager,
+                         val feedHandler : AtomFeedCreator,
+                         val settings: VsixServerSettings) : BaseController() {
 
     {
-        LOG.info("Initializing feed controller.")
-        web.registerController("/app/vsix/v1/FeedService.svc/**", this)
+        web.registerController(settings.VsixFeedPath + "/**", this)
     }
 
     override fun doHandle(request: HttpServletRequest, response: HttpServletResponse): ModelAndView? {
@@ -21,3 +23,4 @@ class FeedServerController(val web : WebControllerManager, val feedHandler : Ato
         return null
     }
 }
+
