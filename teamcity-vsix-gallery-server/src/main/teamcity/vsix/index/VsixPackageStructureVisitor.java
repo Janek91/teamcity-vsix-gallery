@@ -27,7 +27,7 @@ public class VsixPackageStructureVisitor {
         myAnalysers = analysers;
     }
 
-    public void visit(@NotNull BuildArtifact artifact) throws PackageLoadException {
+    public void visit(@NotNull BuildArtifact artifact) {
         if(myAnalysers.isEmpty()) return;
         ZipInputStream zipInputStream = null;
         InputStream stream = null;

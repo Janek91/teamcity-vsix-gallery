@@ -34,13 +34,9 @@ class VsixMetadataProvider() : BuildMetadataProvider {
 
         for (aPackage in packages) {
             LOG.info("Indexing VSIX package from artifact " + aPackage.getRelativePath() + " of build " + LogUtil.describe(build))
-            try {
-                val metadata = generateMetadataForPackage(build, aPackage)
-                //myReset.resetCache()
-                store.addParameters(metadata.get("Id"), metadata)
-            } catch (e: PackageLoadException) {
-                LOG.warn("Failed to read VSIX package: " + aPackage)
-            }
+            val metadata = generateMetadataForPackage(build, aPackage)
+            //myReset.resetCache()
+            store.addParameters(metadata.get("Id"), metadata)
         }
     }
 
