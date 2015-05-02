@@ -9,7 +9,9 @@ import jetbrains.buildServer.web.openapi.SimpleCustomTab
 import jetbrains.buildServer.web.util.WebUtil
 import javax.servlet.http.HttpServletRequest
 
-class ServerSettingsTab(pagePlaces: PagePlaces, descriptor: PluginDescriptor, val serverSettings: ServerSettings) :
+class ServerSettingsTab(pagePlaces: PagePlaces,
+                        val descriptor: PluginDescriptor,
+                        val serverSettings: ServerSettings) :
         SimpleCustomTab(pagePlaces,
                 PlaceId.ADMIN_SERVER_CONFIGURATION_TAB,
                 "vsixGalleryServerSettingsTab",
@@ -29,5 +31,7 @@ class ServerSettingsTab(pagePlaces: PagePlaces, descriptor: PluginDescriptor, va
         model.put("actualServerUrl", WebUtil.getRootUrl(request));
         model.put("publicFeedUrl", WebUtil.GUEST_AUTH_PREFIX + "/app/vsix/v1/FeedService.svc")
         model.put("isGuestEnabled", serverSettings.isGuestLoginAllowed())
+        model.put("imagesUrl", descriptor.getPluginResourcesPath("server/img"))
+        model.put("pluginVersion", descriptor.getPluginVersion())
     }
 }

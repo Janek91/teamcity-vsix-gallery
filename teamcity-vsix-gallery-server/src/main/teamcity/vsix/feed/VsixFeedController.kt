@@ -14,6 +14,10 @@ class VsixFeedController(val web : WebControllerManager, val feedHandler : AtomF
     }
 
     override fun doHandle(request: HttpServletRequest, response: HttpServletResponse): ModelAndView? {
+        if (!BaseController.isGet(request)) {
+            response.sendError(HttpServletResponse.SC_NOT_ACCEPTABLE, "TeamCity provided feed is readonly.")
+            return null
+        }
 
         feedHandler.handleRequest(request, response)
         return null
