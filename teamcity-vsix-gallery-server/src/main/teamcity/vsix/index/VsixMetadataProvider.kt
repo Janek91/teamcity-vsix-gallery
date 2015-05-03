@@ -21,16 +21,16 @@ import teamcity.vsix.feed.VSIX_EXTENSION
 import teamcity.vsix.feed.VSIX_PROVIDER_ID
 
 class VsixMetadataProvider() : BuildMetadataProvider {
-    val LOG = Logger.getInstance("teamcity.vsix");
+    val log = Logger.getInstance("teamcity.vsix");
 
-    {
-        LOG.info("Metadata provider initialized.")
+    init {
+        log.info("Metadata provider initialized.")
     }
 
     override fun getProviderId(): String = VSIX_PROVIDER_ID
 
     override fun generateMedatadata(build: SBuild, store: MetadataStorageWriter) {
-        LOG.info("Looking for VSIX packages in " + LogUtil.describe(build))
+        log.info("Looking for VSIX packages in " + LogUtil.describe(build))
 
         val packages = ArrayList<BuildArtifact>()
         visitArtifacts(build.getArtifacts(BuildArtifactsViewMode.VIEW_ALL).getRootArtifact(), packages)
@@ -43,13 +43,13 @@ class VsixMetadataProvider() : BuildMetadataProvider {
 //         })
 
         for (aPackage in packages) {
-            LOG.info("Indexing VSIX package from artifact " + aPackage.getRelativePath() + " of build " + LogUtil.describe(build))
+            log.info("Indexing VSIX package from artifact " + aPackage.getRelativePath() + " of build " + LogUtil.describe(build))
             try {
                 val metadata = generateMetadataForPackage(build, aPackage)
                 //myReset.resetCache()
                 store.addParameters(metadata.get("Id"), metadata)
             } catch(ex: Exception) {
-                LOG.warn("An error occurred during generating VSIX metadata: " + ex.toString())
+                log.warn("An error occurred during generating VSIX metadata: " + ex.toString())
             }
         }
     }
@@ -63,9 +63,9 @@ class VsixMetadataProvider() : BuildMetadataProvider {
         visitor.visit(aPackage)
 
         val metadata = analyzer.getItems()
-        metadata.put(TEAMCITY_ARTIFACT_RELPATH, aPackage.getRelativePath())
-        metadata.put(TEAMCITY_BUILD_TYPE_ID, build.getBuildTypeId())
-        LOG.debug("Metadata: " + metadata)
+        metadata.plus(Pair(TEAMCITY_ARTIFACT_RELPATH, aPackage.getRelativePath()))
+        metadata.plus(Pair(TEAMCITY_BUILD_TYPE_ID, build.getBuildTypeId()))
+        log.debug("Metadata: " + metadata)
         return metadata
     }
 

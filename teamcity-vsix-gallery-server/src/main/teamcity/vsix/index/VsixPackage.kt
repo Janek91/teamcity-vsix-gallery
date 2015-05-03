@@ -3,14 +3,13 @@ package teamcity.vsix.index
 import com.intellij.openapi.diagnostic.Logger
 import jetbrains.buildServer.serverSide.metadata.BuildMetadataEntry
 
-import teamcity.vsix.index.PackageAttributes.*
 
 data class VsixPackage(val entry: BuildMetadataEntry) {
-    val LOG = Logger.getInstance("teamcity.vsix");
+    val log = Logger.getInstance("teamcity.vsix");
     val metadata = entry.getMetadata();
 
     init {
-        LOG.info("Metadata: " + metadata)
+        log.info("Metadata: " + metadata)
     }
 
     public val Id: String = metadata.get(ID).orEmpty();
