@@ -43,7 +43,7 @@ public class VsixPackageStructureVisitor {
                     LOG.info(String.format("Manifest file found on path %s in VSIX package %s", zipEntryName, vsixPackageName));
                     final VsixManifestContent vsixManifestContent = readVsixManifestContent(zipInputStream);
                     if (vsixManifestContent == null)
-                        LOG.warn("Failed to read .vsixmanifest file content from NuGet package " + vsixPackageName);
+                        LOG.warn("Failed to read .vsixmanifest file content from VSIX package " + vsixPackageName);
                     else {
                         for(VsixPackageStructureAnalyser analyser : myAnalysers){
                             analyser.analyzeVsixManifest(vsixManifestContent);
@@ -53,7 +53,8 @@ public class VsixPackageStructureVisitor {
                 }
             }
         } catch (IOException e) {
-            LOG.warn("Failed to read content of NuGet package " + vsixPackageName);
+            LOG.warn("Failed to read content of VSIX package " + vsixPackageName);
+            LOG.warn(e.toString());
             if(zipInputStream != null){
                 try {
                     zipInputStream.close();

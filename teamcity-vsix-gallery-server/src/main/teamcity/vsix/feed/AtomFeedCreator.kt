@@ -21,14 +21,19 @@ class AtomFeedCreator(val index: PackagesIndex, val projects: ProjectManager) {
     fun handleRequest(request: HttpServletRequest, response: HttpServletResponse) {
         val entries = index.getPackageEntries()
 
-        LOG.info("Got entries: " + entries)
+        LOG.debug("Got entries: " + entries)
 
-        val xml = createFeed2(entries);
+        // gets the distinct last updated entries
+        val latestEntries  = entries groupBy { it.Id } map { it.getValue().sortDescendingBy { it.LastUpdated }.first() }
+
+        LOG.debug("Latest: " + latestEntries)
+
+        val xml = createFeed(latestEntries);
         response.setContentType("application/xml");
         response.getOutputStream().write(xml.toByteArray())
     }
 
-    fun createFeed2(packages: Collection<VsixPackage>): String {
+    fun createFeed(packages: Collection<VsixPackage>): String {
         // todo replace with Util.doUnderContextClassLoader()
 
         val current = Thread.currentThread().getContextClassLoader()
@@ -41,7 +46,7 @@ class AtomFeedCreator(val index: PackagesIndex, val projects: ProjectManager) {
                     .gotoRoot().addTag("updated").addText(DateTime.now(DateTimeZone.UTC).toString())
 
             packages.forEach {
-                val entry = tag.addTag("entry")
+                val entry = tag.gotoRoot().addTag("entry")
                 entry.addTag("id").addText(it.Id)
                 entry.addTag("title").addAttribute("type", "text").addText(it.Title)
                 entry.addTag("summary").addAttribute("type", "text").addText(it.Summary)

@@ -5,6 +5,7 @@ import com.intellij.openapi.diagnostic.Logger
 import jetbrains.buildServer.log.Loggers
 import jetbrains.buildServer.serverSide.SBuild
 import jetbrains.buildServer.serverSide.artifacts.BuildArtifact
+import jetbrains.buildServer.serverSide.artifacts.BuildArtifacts
 import jetbrains.buildServer.serverSide.artifacts.BuildArtifactsViewMode
 import jetbrains.buildServer.serverSide.dependency.Dependency
 import jetbrains.buildServer.serverSide.impl.LogUtil
@@ -16,6 +17,7 @@ import org.joda.time.DateTimeZone
 import java.util.*
 
 import teamcity.vsix.feed.FeedConstants.*
+import jetbrains.buildServer.serverSide.artifacts.BuildArtifacts.BuildArtifactsProcessor.Continuation.*
 
 class VsixMetadataProvider() : BuildMetadataProvider {
     val LOG = Logger.getInstance("teamcity.vsix");
@@ -31,12 +33,23 @@ class VsixMetadataProvider() : BuildMetadataProvider {
 
         val packages = ArrayList<BuildArtifact>()
         visitArtifacts(build.getArtifacts(BuildArtifactsViewMode.VIEW_ALL).getRootArtifact(), packages)
+        // todo: consider enabling all arficats, maybe an option
+
+//        build.getArtifacts(BuildArtifactsViewMode.VIEW_ALL).iterateArtifacts({ artifact ->
+//            LOG.info("Processing artifact: " + artifact)
+//            visitArtifacts(artifact, packages)
+//            CONTINUE
+//         })
 
         for (aPackage in packages) {
             LOG.info("Indexing VSIX package from artifact " + aPackage.getRelativePath() + " of build " + LogUtil.describe(build))
-            val metadata = generateMetadataForPackage(build, aPackage)
-            //myReset.resetCache()
-            store.addParameters(metadata.get("Id"), metadata)
+            try {
+                val metadata = generateMetadataForPackage(build, aPackage)
+                //myReset.resetCache()
+                store.addParameters(metadata.get("Id"), metadata)
+            } catch(ex: Exception) {
+                LOG.warn("An error occurred during generating VSIX metadata: " + ex.toString())
+            }
         }
     }
 

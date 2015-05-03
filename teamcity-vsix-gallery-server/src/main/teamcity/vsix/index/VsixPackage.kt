@@ -10,8 +10,7 @@ data class VsixPackage(val entry: BuildMetadataEntry) {
     val metadata = entry.getMetadata();
 
     {
-        LOG.info("got metadata: " + metadata)
-        metadata.forEach { LOG.info("Key: " + it.getKey() + " Value: " + it.getValue()) }
+        LOG.info("Metadata: " + metadata)
     }
 
     public val Id: String = metadata.get(ID).orEmpty();
