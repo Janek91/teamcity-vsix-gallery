@@ -59,7 +59,9 @@ class AtomFeedCreator(val index: PackagesIndex, val projects: ProjectManager) {
                 vsix.addTag("Version").addText(it.Version)
             }
 
-            return tag.toString().replace("<feed>", "<feed xmlns=\"http://www.w3.org/2005/Atom\">") // I don't have a better idea...
+            return tag.toString().replace("<feed>", "<feed xmlns=\"http://www.w3.org/2005/Atom\">")
+                                 .replace("<Vsix>", "<Vsix xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://schemas.microsoft.com/developer/vsx-syndication-schema/2010\">")
+                                 // I don't have a better idea...
         } finally {
             Thread.currentThread().setContextClassLoader(current)
         }
