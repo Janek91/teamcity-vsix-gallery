@@ -69,6 +69,6 @@ class AtomFeedCreator(val index: PackagesIndex, val projects: ProjectManager) {
 
     private fun getArtifactPath(vsix: VsixPackage): String {
         val externalBuildId = projects.findBuildTypeById(vsix.BuildTypeId).getExternalId()
-        return WebUtil.GUEST_AUTH_PREFIX + "repository/download/" + externalBuildId + "/" + vsix.BuildId + ":id/" + vsix.ContentPath
+        return "${WebUtil.GUEST_AUTH_PREFIX}repository/download/$externalBuildId/${vsix.BuildId}:id/${vsix.ContentPath}"
     }
 }
