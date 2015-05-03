@@ -1,5 +1,5 @@
 package teamcity.vsix.feed
 
-val VSIX_PROVIDER_ID = "vsix"
-val VSIX_EXTENSION = ".vsix"
-val VSIXMANIFEST_FILE_EXTENSION = ".vsixmanifest"
+public val VSIX_PROVIDER_ID: String = "vsix"
+public val VSIX_EXTENSION: String = ".vsix"
+public val VSIXMANIFEST_FILE_EXTENSION: String = ".vsixmanifest"
