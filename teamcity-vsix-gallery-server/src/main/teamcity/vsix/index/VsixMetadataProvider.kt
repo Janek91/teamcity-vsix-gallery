@@ -16,8 +16,9 @@ import org.joda.time.DateTime
 import org.joda.time.DateTimeZone
 import java.util.*
 
-import teamcity.vsix.feed.FeedConstants.*
 import jetbrains.buildServer.serverSide.artifacts.BuildArtifacts.BuildArtifactsProcessor.Continuation.*
+import teamcity.vsix.feed.VSIX_EXTENSION
+import teamcity.vsix.feed.VSIX_PROVIDER_ID
 
 class VsixMetadataProvider() : BuildMetadataProvider {
     val LOG = Logger.getInstance("teamcity.vsix");
