@@ -9,7 +9,7 @@ This plugin turns your TeamCity 9 into a private Visual Studio Extension Gallery
 
 ## Installation
 
-* Download the latest `teamcity-vsix-gallery.zip` from the [releases](/releases) page
+* Download the latest `teamcity-vsix-gallery.zip` from the [releases](../..//releases) page
 * Put the zip file into your [TeamCity Data](https://confluence.jetbrains.com/display/TCD9/TeamCity+Data+Directory) `plugins` directory (e.g. `D:\TeamCity\data\plugins`)
 * Restart the TeamCity service. The plugin will be automatically extracted and installed
 
