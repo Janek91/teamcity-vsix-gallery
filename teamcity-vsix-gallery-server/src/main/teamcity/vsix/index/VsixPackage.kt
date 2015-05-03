@@ -9,7 +9,7 @@ data class VsixPackage(val entry: BuildMetadataEntry) {
     val LOG = Logger.getInstance("teamcity.vsix");
     val metadata = entry.getMetadata();
 
-    {
+    init {
         LOG.info("Metadata: " + metadata)
     }
 
