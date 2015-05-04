@@ -11,15 +11,16 @@ import javax.servlet.http.HttpServletResponse
 import java.util.ArrayList
 import com.mycila.xmltool.XMLDoc
 import jetbrains.buildServer.serverSide.ProjectManager
+import jetbrains.buildServer.serverSide.metadata.MetadataStorage
 import jetbrains.buildServer.util.Util
 import jetbrains.buildServer.web.util.WebUtil
 
-class AtomFeedCreator(val index: PackagesIndex, val projects: ProjectManager) {
+class AtomFeedCreator(val storage: MetadataStorage, val projects: ProjectManager) {
     val LOG = Logger.getInstance("teamcity.vsix");
     val gallery_id = "uuid:38ba4411-63e2-425c-8798-7dace9b99c39;id=1"
 
-    fun handleRequest(request: HttpServletRequest, response: HttpServletResponse) {
-        val entries = index.getPackageEntries()
+    fun handleRequest(response: HttpServletResponse) {
+        val entries = storage.getAllEntries(VSIX_PROVIDER_ID).map { VsixPackage(it) }
 
         LOG.debug("Got entries: " + entries)
 
