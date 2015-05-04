@@ -26,15 +26,15 @@ public class VsixPackageStructureVisitor(private val analysers: Collection<VsixP
         var zipInputStream: ZipInputStream? = null
         try {
             zipInputStream = ZipInputStream(BufferedInputStream(stream))
-            var zipEntry = zipInputStream.getNextEntry()
+            var zipEntry = zipInputStream?.getNextEntry()
             while (zipEntry != null) {
-                if (zipEntry.isDirectory()) {
+                if (zipEntry?.isDirectory()!!) {
                     continue
                 }
-                val zipEntryName = zipEntry.getName()
+                val zipEntryName = zipEntry?.getName()!!
                 if (zipEntryName.endsWith(VSIXMANIFEST_FILE_EXTENSION)) {
                     log.info("Manifest file found on path $zipEntryName in VSIX package $vsixPackageName")
-                    val vsixManifestContent = readVsixManifestContent(zipInputStream)
+                    val vsixManifestContent = readVsixManifestContent(zipInputStream!!)
                     if (vsixManifestContent == null) {
                         log.warn("Failed to read .vsixmanifest file content from VSIX package $vsixPackageName")
                     } else {
@@ -42,19 +42,17 @@ public class VsixPackageStructureVisitor(private val analysers: Collection<VsixP
                             it.analyzeVsixManifest(vsixManifestContent)
                         }
                     }
-                    zipInputStream.closeEntry()
+                    zipInputStream?.closeEntry()
                 }
             }
         } catch (ioException: IOException) {
             log.warn("Failed to read content of VSIX package " + vsixPackageName);
             log.warn(ioException.toString());
-            if (zipInputStream != null) {
-                try {
-                    zipInputStream.close()
+            try {
+                zipInputStream?.close()
 
-                } catch (exception: IOException) {
+            } catch (exception: IOException) {
 
-                }
             }
         } finally {
             FileUtil.close(stream)

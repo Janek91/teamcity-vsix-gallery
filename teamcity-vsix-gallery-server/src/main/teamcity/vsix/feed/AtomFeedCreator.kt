@@ -3,7 +3,6 @@ package teamcity.vsix.feed
 import com.intellij.openapi.diagnostic.Logger
 import org.joda.time.DateTime
 import org.joda.time.DateTimeZone
-import teamcity.vsix.index.PackagesIndex
 import teamcity.vsix.index.VsixPackage
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
@@ -19,7 +18,7 @@ class AtomFeedCreator(val storage: MetadataStorage, val projects: ProjectManager
     val LOG = Logger.getInstance("teamcity.vsix");
     val gallery_id = "uuid:38ba4411-63e2-425c-8798-7dace9b99c39;id=1"
 
-    fun handleRequest(response: HttpServletResponse) {
+    fun handleRequest(request: HttpServletRequest, response: HttpServletResponse) {
         val entries = storage.getAllEntries(VSIX_PROVIDER_ID).map { VsixPackage(it) }
 
         LOG.debug("Got entries: " + entries)
