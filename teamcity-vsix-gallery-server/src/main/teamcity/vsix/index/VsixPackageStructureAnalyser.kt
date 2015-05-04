@@ -10,7 +10,7 @@ import java.util.LinkedHashMap
 public class VsixPackageStructureAnalyser(private val finishDate: DateTime) {
     private val manifestItems = LinkedHashMap<String, String>()
 
-    public fun getItems(): Map<String, String> {
+    public fun getItems(): MutableMap<String, String> {
         return manifestItems
     }
 

@@ -63,8 +63,8 @@ class VsixMetadataProvider() : BuildMetadataProvider {
         visitor.visit(aPackage)
 
         val metadata = analyzer.getItems()
-        metadata.plus(Pair(TEAMCITY_ARTIFACT_RELPATH, aPackage.getRelativePath()))
-        metadata.plus(Pair(TEAMCITY_BUILD_TYPE_ID, build.getBuildTypeId()))
+        metadata.put(TEAMCITY_ARTIFACT_RELPATH, aPackage.getRelativePath())
+        metadata.put(TEAMCITY_BUILD_TYPE_ID, build.getBuildTypeId())
         log.debug("Metadata: " + metadata)
         return metadata
     }
