@@ -1,7 +1,7 @@
 
 #TeamCity Visual Studio Gallery (vsix) Plugin
 
-This plugin turns your TeamCity 9 into a private Visual Studio Extension Gallery!
+This plugin turns your TeamCity 9 into a private Visual Studio Extension Gallery! <a href="https://teamcity.jetbrains.com/project.html?projectId=TeamCityThirdPartyPlugins_TeamCityVsixGalleryPlugin&tab=projectOverview&guest=1"><img src="https://teamcity.jetbrains.com/app/rest/builds/buildType:(id:TeamCityThirdPartyPlugins_TeamCityVsixGalleryPlugin_Build)/statusIcon?guest=1" /></a>
 
 ![](http://i.imgur.com/NeUKH1A.png)
 
@@ -9,9 +9,9 @@ This plugin turns your TeamCity 9 into a private Visual Studio Extension Gallery
 
 ## Installation
 
-* Download the latest `teamcity-vsix-gallery.zip` from the [releases](../..//releases) page
-* Put the zip file into your [TeamCity Data](https://confluence.jetbrains.com/display/TCD9/TeamCity+Data+Directory) `plugins` directory (e.g. `D:\TeamCity\data\plugins`)
-* Restart the TeamCity service. The plugin will be automatically extracted and installed
+* Download the latest `teamcity-vsix-gallery.zip` from the [releases](../..//releases) page, compatible with your TeamCity installation
+* Put the zip file into your [TeamCity Data](https://confluence.jetbrains.com/display/TCD9/TeamCity+Data+Directory) `plugins` directory (e.g. `D:\TeamCity\data\plugins`) OR install it via the **Plugins List** page in TeamCity Administration settings
+* Restart the TeamCity service
 
 ## Configuration
 
@@ -24,7 +24,7 @@ Before using the plugin, however, several operations must be performed:
   * In your TeamCity, open the **Administration** page, and go to **Authentication**, located under **Server Administration**
   * Make sure *Allow login as guest user* is checked:  
   ![](http://i.imgur.com/2MSK4cO.png)
-  
+
 2. Configure your project to include your `.vsix` as a build artifact:
   * Go to your build configuration, and in the **Artifact path**, make sure your `.vsix` is copied to the artifacts root, e.g.:
   ![](http://i.imgur.com/6eYH1vt.png)
@@ -38,7 +38,7 @@ After this, go to the new **VSIX Gallery** menu, and you should see the feed to 
 
 Copy this link, and add it to the **Extensions and Updates** in the **Tools - Options** dialog in your Visual Studio (as pictured above)
 
-That's it! From now on, every new build will be automatically indexed, and appear as an update in your gallery! 
+That's it! From now on, every new build will be automatically indexed, and appear as an update in your gallery!
 
 ## Build
 
