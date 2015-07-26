@@ -17,7 +17,7 @@ class ServerSettingsTab(pagePlaces: PagePlaces,
                 "vsixGalleryServerSettingsTab",
                 descriptor.getPluginResourcesPath("settings.jsp"),
                 "VSIX Gallery") {
-    {
+    init {
         addJsFile(descriptor.getPluginResourcesPath("server/feedServer.js"))
         addCssFile(descriptor.getPluginResourcesPath("server/feedServer.css"))
 

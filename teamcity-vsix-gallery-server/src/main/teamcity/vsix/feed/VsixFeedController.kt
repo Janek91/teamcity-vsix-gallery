@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 class VsixFeedController(val web : WebControllerManager, val feedHandler : AtomFeedCreator) : BaseController() {
-    {
+    init {
         web.registerController("/app/vsix/v1/FeedService.svc/**", this)
     }
 
