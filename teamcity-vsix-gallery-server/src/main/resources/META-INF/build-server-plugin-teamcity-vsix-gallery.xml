@@ -2,7 +2,6 @@
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
 <beans default-autowire="constructor">
     <bean class="teamcity.vsix.index.VsixMetadataProvider"/>
-    <bean class="teamcity.vsix.index.PackagesIndex" />
 
     <bean class="teamcity.vsix.feed.VsixFeedController" />
     <bean class="teamcity.vsix.feed.AtomFeedCreator" />

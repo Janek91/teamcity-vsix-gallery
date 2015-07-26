@@ -1,7 +1,7 @@
 package teamcity.vsix.settings
 
 import com.intellij.openapi.diagnostic.Logger
-import jetbrains.buildServer.serverSide.impl.ServerSettings
+import jetbrains.buildServer.serverSide.ServerSettings
 import jetbrains.buildServer.web.openapi.PagePlaces
 import jetbrains.buildServer.web.openapi.PlaceId
 import jetbrains.buildServer.web.openapi.PluginDescriptor
