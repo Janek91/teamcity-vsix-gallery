@@ -9,6 +9,7 @@
   <artifactId>build</artifactId>
   <packaging>pom</packaging>
   <properties>
+      <kotlin.version>1.0.0</kotlin.version>
       <maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
       <teamcity.teamcity-vsix-gallery.plugin.version>snapshot-${maven.build.timestamp}</teamcity.teamcity-vsix-gallery.plugin.version>
       <teamcity.teamcity-vsix-gallery.plugin.vendorName>Igal Tabachnik</teamcity.teamcity-vsix-gallery.plugin.vendorName>
@@ -20,6 +21,11 @@
            <groupId>com.hmemcpy</groupId>
            <artifactId>teamcity-vsix-gallery-server</artifactId>
            <version>1.0-SNAPSHOT</version>
+      </dependency>
+      <dependency>
+          <groupId>org.jetbrains.kotlin</groupId>
+          <artifactId>kotlin-stdlib</artifactId>
+          <version>${kotlin.version}</version>
       </dependency>
   </dependencies>
   <build>
@@ -98,6 +104,33 @@
                                 <arg line="/c net start teamcity" />
                             </exec>
                         </target>
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>
+        <plugin>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-maven-plugin</artifactId>
+            <version>${kotlin.version}</version>
+            <executions>
+                <execution>
+                    <id>compile</id>
+                    <phase>compile</phase>
+                    <goals>
+                        <goal>compile</goal>
+                    </goals>
+                    <configuration>
+                        <sourceDirs></sourceDirs>
+                    </configuration>
+                </execution>
+                <execution>
+                    <id>test-compile</id>
+                    <phase>test-compile</phase>
+                    <goals>
+                        <goal>test-compile</goal>
+                    </goals>
+                    <configuration>
+                        <sourceDirs></sourceDirs>
                     </configuration>
                 </execution>
             </executions>
