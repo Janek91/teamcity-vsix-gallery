@@ -30,8 +30,8 @@ class ServerSettingsTab(pagePlaces: PagePlaces,
         model.put("serverEnabled", true)
         model.put("actualServerUrl", WebUtil.getRootUrl(request));
         model.put("publicFeedUrl", WebUtil.GUEST_AUTH_PREFIX + "app/vsix/v1/FeedService.svc")
-        model.put("isGuestEnabled", serverSettings.isGuestLoginAllowed())
+        model.put("isGuestEnabled", serverSettings.isGuestLoginAllowed)
         model.put("imagesUrl", descriptor.getPluginResourcesPath("server/img"))
-        model.put("pluginVersion", descriptor.getPluginVersion())
+        model.put("pluginVersion", descriptor.pluginVersion!!)
     }
 }

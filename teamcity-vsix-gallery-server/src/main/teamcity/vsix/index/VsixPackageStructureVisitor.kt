@@ -20,18 +20,18 @@ public class VsixPackageStructureVisitor(private val analysers: Collection<VsixP
             return
         }
         // TODO: Refactor all this to a more functional style
-        val vsixPackageName = artifact.getName()
-        val stream = artifact.getInputStream()
+        val vsixPackageName = artifact.name
+        val stream = artifact.inputStream
         // TODO: this is not nice!
         var zipInputStream: ZipInputStream? = null
         try {
             zipInputStream = ZipInputStream(BufferedInputStream(stream))
-            var zipEntry = zipInputStream?.getNextEntry()
+            var zipEntry = zipInputStream.nextEntry
             while (zipEntry != null) {
-                if (zipEntry?.isDirectory()!!) {
+                if (zipEntry.isDirectory) {
                     continue
                 }
-                val zipEntryName = zipEntry?.getName()!!
+                val zipEntryName = zipEntry.name
                 if (zipEntryName.endsWith(VSIXMANIFEST_FILE_EXTENSION)) {
                     log.info("Manifest file found on path $zipEntryName in VSIX package $vsixPackageName")
                     val vsixManifestContent = readVsixManifestContent(zipInputStream!!)
@@ -42,7 +42,7 @@ public class VsixPackageStructureVisitor(private val analysers: Collection<VsixP
                             it.analyzeVsixManifest(vsixManifestContent)
                         }
                     }
-                    zipInputStream?.closeEntry()
+                    zipInputStream.closeEntry()
                 }
             }
         } catch (ioException: IOException) {
@@ -52,7 +52,6 @@ public class VsixPackageStructureVisitor(private val analysers: Collection<VsixP
                 zipInputStream?.close()
 
             } catch (exception: IOException) {
-
             }
         } finally {
             FileUtil.close(stream)

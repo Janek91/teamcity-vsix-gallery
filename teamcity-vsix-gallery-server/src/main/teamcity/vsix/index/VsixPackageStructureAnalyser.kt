@@ -15,15 +15,15 @@ public class VsixPackageStructureAnalyser(private val finishDate: DateTime) {
     }
 
     public fun analyzeVsixManifest(manifest: VsixManifestContent) {
-        addItem(ID, manifest.getId())
-        addItem(VERSION, manifest.getVersion())
-        addItem(TITLE, manifest.getDisplayName())
-        addItem(SUMMARY, manifest.getDescription())
+        addItem(ID, manifest.id)
+        addItem(VERSION, manifest.version)
+        addItem(TITLE, manifest.displayName)
+        addItem(SUMMARY, manifest.description)
         addItem(LAST_UPDATED, finishDate.toString())
-        addItem(PUBLISHER, manifest.getPublisher())
+        addItem(PUBLISHER, manifest.publisher)
     }
 
-    private fun addItem(key: String, value: String?) {
+    private fun addItem(key: String, value: String) {
         if (!StringUtil.isEmptyOrSpaces(value)) {
             manifestItems.put(key, value)
         }
